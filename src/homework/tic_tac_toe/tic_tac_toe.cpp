@@ -15,26 +15,7 @@ void TicTacToe::display_board()const
 
 string TicTacToe::get_player()const 
 {
-    string answer;
-    bool answer_valid = false;
-
-    do {
-        cout << "Would you like to be X or O? ";
-        cin >> answer;
-
-        if (answer == "X" || answer == "O") {
-            answer_valid = true;
-        }
-        else 
-        {
-            cout << "Invalid entry!\n";
-            answer_valid = false;
-        }
-    } while (answer_valid == false);
-    
-    
-
-    return answer;
+     return TicTacToe::player;
 }
 
 void TicTacToe::clear_board() 
@@ -85,7 +66,149 @@ bool TicTacToe::check_board_full()
 
 bool TicTacToe::game_over() 
 {
-    return TicTacToe::check_board_full();
+    if (TicTacToe::check_column_win() == true)
+    {
+        TicTacToe::set_winner();
+        return true;
+    }
+    else if (TicTacToe::check_row_win() == true) 
+    {
+        TicTacToe::set_winner();
+        return true;
+    }
+    else if (TicTacToe::check_diagonal_win() == true) 
+    {
+        TicTacToe::set_winner();
+        return true;
+    }
+    else if (TicTacToe::check_board_full() == true) 
+    {
+        TicTacToe::winner = "C";
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
+    
+}
+
+void TicTacToe::set_winner() 
+{
+    if (TicTacToe::player == "X") 
+    {
+        TicTacToe::winner = "O";
+    }
+    else 
+    {
+        TicTacToe::winner = "X";
+    }
+}
+
+string TicTacToe::get_winner() 
+{
+    return TicTacToe::winner;
+}
+
+bool TicTacToe::peg_empty(int position) 
+{
+    position -= 1;
+    if (TicTacToe::pegs[position] == " ") 
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
+}
+
+bool TicTacToe::check_column_win() 
+{
+    if (TicTacToe::pegs[0] == "X" && TicTacToe::pegs[3] == "X" && TicTacToe::pegs[6] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[0] == "O" && TicTacToe::pegs[3] == "O" && TicTacToe::pegs[6] == "O") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[1] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[7] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[1] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[7] == "O") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[2] == "X" && TicTacToe::pegs[5] == "X" && TicTacToe::pegs[8] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[2] == "O" && TicTacToe::pegs[5] == "O" && TicTacToe::pegs[8] == "O") 
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
+}
+
+bool TicTacToe::check_row_win() 
+{
+    if (TicTacToe::pegs[0] == "X" && TicTacToe::pegs[1] == "X" && TicTacToe::pegs[2] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[0] == "O" && TicTacToe::pegs[1] == "O" && TicTacToe::pegs[2] == "O") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[3] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[5] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[3] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[5] == "O") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[6] == "X" && TicTacToe::pegs[7] == "X" && TicTacToe::pegs[8] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[6] == "O" && TicTacToe::pegs[7] == "O" && TicTacToe::pegs[8] == "O") 
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
+}
+
+bool TicTacToe::check_diagonal_win() 
+{
+    if (TicTacToe::pegs[0] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[8] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[0] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[8] == "O") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[6] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[2] == "X") 
+    {
+        return true;
+    }
+    else if (TicTacToe::pegs[6] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[2] == "O") 
+    {
+        return true;
+    }
+    else 
+    {
+        return false;
+    }
 }
 
 
