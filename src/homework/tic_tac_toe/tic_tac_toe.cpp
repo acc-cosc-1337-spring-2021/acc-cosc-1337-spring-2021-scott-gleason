@@ -1,16 +1,49 @@
 #include "tic_tac_toe.h"
 
-void TicTacToe::display_board()const 
+std::ostream& operator<<(std::ostream& output, const TicTacToe& tic_tac_toe) 
 {
-    cout << "   |   |   \n";
-    cout << " " << TicTacToe::pegs[0] << " | " << TicTacToe::pegs[1] << " | " << TicTacToe::pegs[2] << "\n";
-    cout << "___|___|___\n";
-    cout << "   |   |   \n";
-    cout << " " << TicTacToe::pegs[3] << " | " << TicTacToe::pegs[4] << " | " << TicTacToe::pegs[5] << "\n";
-    cout << "___|___|___\n";
-    cout << "   |   |   \n";
-    cout << " " << TicTacToe::pegs[6] << " | " << TicTacToe::pegs[7] << " | " << TicTacToe::pegs[8] << "\n";
-    cout << "   |   |   \n";
+    output << "   |   |   \n";
+    output << " " << tic_tac_toe.pegs[0] << " | " << tic_tac_toe.pegs[1] << " | " << tic_tac_toe.pegs[2] << "\n";
+    output << "___|___|___\n";
+    output << "   |   |   \n";
+    output << " " << tic_tac_toe.pegs[3] << " | " << tic_tac_toe.pegs[4] << " | " << tic_tac_toe.pegs[5] << "\n";
+    output << "___|___|___\n";
+    output << "   |   |   \n";
+    output << " " << tic_tac_toe.pegs[6] << " | " << tic_tac_toe.pegs[7] << " | " << tic_tac_toe.pegs[8] << "\n";
+    output << "   |   |   \n";
+
+    return output;
+}
+
+std::istream& operator>>(std::istream& input, TicTacToe& tic_tac_toe) 
+{
+    int position = 0;
+    bool answer_valid;
+
+    do { //Select next position for next peg. Loop winn continue until valid response is entered.
+				cout << "Player " << tic_tac_toe.get_player() << ": Please select where to place your peg (1-9): ";
+				input >> position;
+
+				if (position < 1 || position > 9) {
+					cout << "Invalid entry! Please try again.\n";
+					answer_valid = false;
+				}
+				else 
+				{
+					if (tic_tac_toe.peg_empty(position) == false) {
+						cout << "Peg " << position << " has already been selected. Please try again.\n";
+						answer_valid = false;
+					} 
+					else 
+					{
+						answer_valid = true;
+					}			
+				}
+			} while (answer_valid == false);
+		
+			tic_tac_toe.mark_board(position);
+
+            return input;
 }
 
 string TicTacToe::get_player()const 

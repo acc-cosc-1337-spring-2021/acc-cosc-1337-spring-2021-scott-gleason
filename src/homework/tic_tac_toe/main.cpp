@@ -1,13 +1,17 @@
 #include "tic_tac_toe.h"
+#include "tic_tac_toe_manager.h"
 
 int main() 
 {
-	int position = 0;
 	bool answer_valid = false;
 	string first_player;
 	string play_again = "Y";
 	string game_winner;
+	int x = 0;
+	int o = 0;
+	int t = 0;
 
+	TicTacToeManager manager; // create instance of TicTacToeManager class.
 	TicTacToe tic_tac_toe; // create instance of TicTacToe class
 
 	do 
@@ -33,37 +37,21 @@ int main()
 		do 
 		{
 
-			do { //Select next position for next peg. Loop winn continue until valid response is entered.
-				cout << "Player " << tic_tac_toe.get_player() << ": Please select where to place your peg (1-9): ";
-				cin >> position;
-
-				if (position < 1 || position > 9) {
-					cout << "Invalid entry! Please try again.\n";
-					answer_valid = false;
-				}
-				else 
-				{
-					if (tic_tac_toe.peg_empty(position) == false) {
-						cout << "Peg " << position << " has already been selected. Please try again.\n";
-						answer_valid = false;
-					} 
-					else 
-					{
-						answer_valid = true;
-					}			
-				}
-			} while (answer_valid == false);
-		
-			tic_tac_toe.mark_board(position);
+			cin >> tic_tac_toe;
 
 			if (tic_tac_toe.game_over() == true) //Test if game is over. If yes then display winner or tie.
 			{
 				game_winner = tic_tac_toe.get_winner();
 				if (game_winner == "X" || game_winner == "O")
 				{
-					tic_tac_toe.display_board();
+					cout << tic_tac_toe;
 					cout << "Congratulations! " << game_winner << " is the winner of the game\n";
-					
+					manager.save_game(tic_tac_toe);
+					manager.get_winner_total(x, o, t);
+					cout << "\nX Wins: " << x << "\n";
+					cout << "O Wins: " << o << "\n";
+					cout << "Ties: " << t << "\n\n";
+										
 					do 
 					{
 						cout << "Would you like to play again? Y or N: ";
@@ -82,8 +70,13 @@ int main()
 
 				if (game_winner == "C") 
 				{
-					tic_tac_toe.display_board();
+					cout << tic_tac_toe;
 					cout << "X and O have tied! Better luck next time.\n";
+					manager.save_game(tic_tac_toe);
+					manager.get_winner_total(x, o, t);
+					cout << "\nX Wins: " << x << "\n";
+					cout << "O Wins: " << o << "\n";
+					cout << "Ties: " << t << "\n\n";
 
 					do 
 					{
@@ -103,13 +96,14 @@ int main()
 			}
 			else //If there is no winner continue with game.
 			{
-				tic_tac_toe.display_board();
+				cout << tic_tac_toe;
 			}
 
 		} while (tic_tac_toe.game_over() == false);
 
 	 } while (play_again == "Y" || play_again == "y"); //loop continues until player selects N or n.
 
+	cout << manager;
 	 
 	return 0;
 }

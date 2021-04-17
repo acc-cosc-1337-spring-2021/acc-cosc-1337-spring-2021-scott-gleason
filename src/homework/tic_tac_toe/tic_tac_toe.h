@@ -1,3 +1,6 @@
+#ifndef GAME
+#define GAME
+
 #include<iostream>
 #include<string>
 #include<vector>
@@ -10,10 +13,12 @@ using std::cout;
 
 class TicTacToe 
 {
+    friend std::ostream& operator<<(std::ostream& output, const TicTacToe& tic_tac_toe);
+    friend std::istream& operator>>(std::istream& input, TicTacToe& tic_tac_toe);
+
     public:
         string get_winner();
         TicTacToe() = default;
-        void display_board()const;
         string get_player()const;
         void start_game(string first_player);
         void mark_board(int position);
@@ -33,3 +38,5 @@ class TicTacToe
         bool check_diagonal_win();
         void set_winner();
 };
+
+#endif // GAME

@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
 #include "tic_tac_toe.h"
+#include "tic_tac_toe_manager.h"
 
 TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
@@ -289,5 +290,71 @@ TEST_CASE("Verify win diagonally from bottom left - player O") {
 	REQUIRE(tic_tac_toe.game_over() == false);
 	tic_tac_toe.mark_board(3);
 	REQUIRE(tic_tac_toe.game_over() == true);
+}
+
+TEST_CASE("Verify get winner totalS") {
+	TicTacToe tic_tac_toe;
+	TicTacToeManager manager;
+	int x = 0;
+	int o = 0;
+	int t = 0;
+
+	tic_tac_toe.start_game("X");
+	tic_tac_toe.mark_board(7);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(1);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(8);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(4);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(9);
+	REQUIRE(tic_tac_toe.game_over() == true);
+	manager.save_game(tic_tac_toe);
+
+	tic_tac_toe.start_game("O");
+	tic_tac_toe.mark_board(4);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(1);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(5);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(7);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(6);
+	REQUIRE(tic_tac_toe.game_over() == true);
+	manager.save_game(tic_tac_toe);
+
+	tic_tac_toe.start_game("X");
+	tic_tac_toe.mark_board(1);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(3);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(2);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(4);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(5);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(8);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(6);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(9);
+	REQUIRE(tic_tac_toe.game_over() == false);
+	tic_tac_toe.mark_board(7);
+	tic_tac_toe.game_over();
+	REQUIRE(tic_tac_toe.game_over() == true);
+	manager.save_game(tic_tac_toe);
+	
+	manager.get_winner_total(x, o, t);
+	REQUIRE(x == 1);
+	REQUIRE(o == 1);
+	REQUIRE(t == 1);
+
+	
+	
+
+
 }
 
