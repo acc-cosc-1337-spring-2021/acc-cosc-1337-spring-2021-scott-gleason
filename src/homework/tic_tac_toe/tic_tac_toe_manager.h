@@ -2,6 +2,8 @@
 #define MANAGER
 
 #include "tic_tac_toe.h"
+#include<memory>
+using std::unique_ptr;
 
 class TicTacToeManager 
 
@@ -10,7 +12,7 @@ class TicTacToeManager
 
     public:
         TicTacToeManager() = default;
-        void save_game(TicTacToe b);
+        void save_game(unique_ptr<TicTacToe>& b);
         void get_winner_total(int& x, int& o, int& t);
 
     private:

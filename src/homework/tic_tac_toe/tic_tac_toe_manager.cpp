@@ -1,5 +1,8 @@
 #include "tic_tac_toe.h"
 #include "tic_tac_toe_manager.h"
+#include<memory>
+#include<vector>
+using std::unique_ptr;
 
 void TicTacToeManager::update_winner_count(string winner) 
 {
@@ -24,12 +27,12 @@ void TicTacToeManager::get_winner_total(int& x, int& o, int& t)
     t = ties;
 }
 
-void TicTacToeManager::save_game(TicTacToe b)
+void TicTacToeManager::save_game(unique_ptr<TicTacToe>& b)
 {
-    string winner = b.get_winner();
+    string winner = b -> get_winner();
 
-    TicTacToeManager::games.push_back(b);
-    TicTacToeManager::update_winner_count(winner);
+    //games.push_back(std::move(b));
+    update_winner_count(winner);
     
 }
 

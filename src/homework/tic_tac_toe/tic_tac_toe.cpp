@@ -2,15 +2,33 @@
 
 std::ostream& operator<<(std::ostream& output, const TicTacToe& tic_tac_toe) 
 {
-    output << "   |   |   \n";
-    output << " " << tic_tac_toe.pegs[0] << " | " << tic_tac_toe.pegs[1] << " | " << tic_tac_toe.pegs[2] << "\n";
-    output << "___|___|___\n";
-    output << "   |   |   \n";
-    output << " " << tic_tac_toe.pegs[3] << " | " << tic_tac_toe.pegs[4] << " | " << tic_tac_toe.pegs[5] << "\n";
-    output << "___|___|___\n";
-    output << "   |   |   \n";
-    output << " " << tic_tac_toe.pegs[6] << " | " << tic_tac_toe.pegs[7] << " | " << tic_tac_toe.pegs[8] << "\n";
-    output << "   |   |   \n";
+    if (tic_tac_toe.pegs.size() == 9) 
+    {
+        output << "   |   |   \n";
+        output << " " << tic_tac_toe.pegs[0] << " | " << tic_tac_toe.pegs[1] << " | " << tic_tac_toe.pegs[2] << "\n";
+        output << "___|___|___\n";
+        output << "   |   |   \n";
+        output << " " << tic_tac_toe.pegs[3] << " | " << tic_tac_toe.pegs[4] << " | " << tic_tac_toe.pegs[5] << "\n";
+        output << "___|___|___\n";
+        output << "   |   |   \n";
+        output << " " << tic_tac_toe.pegs[6] << " | " << tic_tac_toe.pegs[7] << " | " << tic_tac_toe.pegs[8] << "\n";
+        output << "   |   |   \n";
+    }
+    else if (tic_tac_toe.pegs.size() == 16) 
+    {
+        output << "   |   |   |   \n";
+        output << " " << tic_tac_toe.pegs[0] << " | " << tic_tac_toe.pegs[1] << " | " << tic_tac_toe.pegs[2] << " | " << tic_tac_toe.pegs[3] << "\n";
+        output << "___|___|___|___\n";
+        output << "   |   |   |   \n";
+        output << " " << tic_tac_toe.pegs[4] << " | " << tic_tac_toe.pegs[5] << " | " << tic_tac_toe.pegs[6] << " | " << tic_tac_toe.pegs[7] << "\n";
+        output << "___|___|___|___\n";
+        output << "   |   |   |   \n";
+        output << " " << tic_tac_toe.pegs[8] << " | " << tic_tac_toe.pegs[9] << " | " << tic_tac_toe.pegs[10] << " | " << tic_tac_toe.pegs[11] << "\n";
+        output << "___|___|___|___\n";
+        output << "   |   |   |   \n";
+        output << " " << tic_tac_toe.pegs[12] << " | " << tic_tac_toe.pegs[13] << " | " << tic_tac_toe.pegs[14] << " | " << tic_tac_toe.pegs[15] << "\n";
+        output << "   |   |   |   \n";
+    }
 
     return output;
 }
@@ -21,7 +39,10 @@ std::istream& operator>>(std::istream& input, TicTacToe& tic_tac_toe)
     bool answer_valid;
 
     do { //Select next position for next peg. Loop winn continue until valid response is entered.
-				cout << "Player " << tic_tac_toe.get_player() << ": Please select where to place your peg (1-9): ";
+
+        if (tic_tac_toe.pegs.size() == 9) 
+        {
+            cout << "Player " << tic_tac_toe.get_player() << ": Please select where to place your peg (1-9): ";
 				input >> position;
 
 				if (position < 1 || position > 9) {
@@ -39,11 +60,35 @@ std::istream& operator>>(std::istream& input, TicTacToe& tic_tac_toe)
 						answer_valid = true;
 					}			
 				}
-			} while (answer_valid == false);
-		
-			tic_tac_toe.mark_board(position);
+        }
+        else if (tic_tac_toe.pegs.size() == 16) 
+        {
+            cout << "Player " << tic_tac_toe.get_player() << ": Please select where to place your peg (1-16): ";
+				input >> position;
 
-            return input;
+				if (position < 1 || position > 16) {
+					cout << "Invalid entry! Please try again.\n";
+					answer_valid = false;
+				}
+				else 
+				{
+					if (tic_tac_toe.peg_empty(position) == false) {
+						cout << "Peg " << position << " has already been selected. Please try again.\n";
+						answer_valid = false;
+					} 
+					else 
+					{
+						answer_valid = true;
+					}			
+				}
+        }
+  
+				
+	} while (answer_valid == false);
+		
+	tic_tac_toe.mark_board(position);
+
+    return input;
 }
 
 string TicTacToe::get_player()const 
@@ -99,19 +144,19 @@ bool TicTacToe::check_board_full()
 
 bool TicTacToe::game_over() 
 {
-    if (TicTacToe::check_column_win() == true)
+    if (check_column_win() == true)
     {
-        TicTacToe::set_winner();
+        set_winner();
         return true;
     }
-    else if (TicTacToe::check_row_win() == true) 
+    else if (check_row_win() == true) 
     {
-        TicTacToe::set_winner();
+        set_winner();
         return true;
     }
-    else if (TicTacToe::check_diagonal_win() == true) 
+    else if (check_diagonal_win() == true) 
     {
-        TicTacToe::set_winner();
+        set_winner();
         return true;
     }
     else if (TicTacToe::check_board_full() == true) 
@@ -158,90 +203,21 @@ bool TicTacToe::peg_empty(int position)
 
 bool TicTacToe::check_column_win() 
 {
-    if (TicTacToe::pegs[0] == "X" && TicTacToe::pegs[3] == "X" && TicTacToe::pegs[6] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[0] == "O" && TicTacToe::pegs[3] == "O" && TicTacToe::pegs[6] == "O") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[1] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[7] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[1] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[7] == "O") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[2] == "X" && TicTacToe::pegs[5] == "X" && TicTacToe::pegs[8] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[2] == "O" && TicTacToe::pegs[5] == "O" && TicTacToe::pegs[8] == "O") 
-    {
-        return true;
-    }
-    else 
-    {
-        return false;
-    }
+    return false;
 }
 
 bool TicTacToe::check_row_win() 
 {
-    if (TicTacToe::pegs[0] == "X" && TicTacToe::pegs[1] == "X" && TicTacToe::pegs[2] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[0] == "O" && TicTacToe::pegs[1] == "O" && TicTacToe::pegs[2] == "O") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[3] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[5] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[3] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[5] == "O") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[6] == "X" && TicTacToe::pegs[7] == "X" && TicTacToe::pegs[8] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[6] == "O" && TicTacToe::pegs[7] == "O" && TicTacToe::pegs[8] == "O") 
-    {
-        return true;
-    }
-    else 
-    {
-        return false;
-    }
+
+    return false;   
+ 
 }
 
 bool TicTacToe::check_diagonal_win() 
 {
-    if (TicTacToe::pegs[0] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[8] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[0] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[8] == "O") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[6] == "X" && TicTacToe::pegs[4] == "X" && TicTacToe::pegs[2] == "X") 
-    {
-        return true;
-    }
-    else if (TicTacToe::pegs[6] == "O" && TicTacToe::pegs[4] == "O" && TicTacToe::pegs[2] == "O") 
-    {
-        return true;
-    }
-    else 
-    {
-        return false;
-    }
+
+   return false;
+   
 }
 
 
