@@ -31,7 +31,7 @@ void TicTacToeManager::save_game(unique_ptr<TicTacToe>& b)
 {
     string winner = b -> get_winner();
 
-    //games.push_back(std::move(b));
+    games.push_back(std::move(b)); // unable to get push back to work.
     update_winner_count(winner);
     
 }
