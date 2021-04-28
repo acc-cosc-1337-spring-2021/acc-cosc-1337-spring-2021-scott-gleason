@@ -12,7 +12,7 @@ std::ostream& operator<<(std::ostream& output, const TicTacToe& tic_tac_toe)
         output << "___|___|___\n";
         output << "   |   |   \n";
         output << " " << tic_tac_toe.pegs[6] << " | " << tic_tac_toe.pegs[7] << " | " << tic_tac_toe.pegs[8] << "\n";
-        output << "   |   |   \n";
+        output << "   |   |   \n\n";
     }
     else if (tic_tac_toe.pegs.size() == 16) 
     {
@@ -27,7 +27,7 @@ std::ostream& operator<<(std::ostream& output, const TicTacToe& tic_tac_toe)
         output << "___|___|___|___\n";
         output << "   |   |   |   \n";
         output << " " << tic_tac_toe.pegs[12] << " | " << tic_tac_toe.pegs[13] << " | " << tic_tac_toe.pegs[14] << " | " << tic_tac_toe.pegs[15] << "\n";
-        output << "   |   |   |   \n";
+        output << "   |   |   |   \n\n";
     }
 
     return output;

@@ -31,16 +31,16 @@ void TicTacToeManager::save_game(unique_ptr<TicTacToe>& b)
 {
     string winner = b -> get_winner();
 
-    games.push_back(std::move(b)); // unable to get push back to work.
     update_winner_count(winner);
-    
+    //games.push_back(move(b)); // push back statement is causing my program to quit before prompting the user to play again.
+        
 }
 
 std::ostream& operator<<(std::ostream& output, const TicTacToeManager& manager) 
 {
-    for(auto game: manager.games) 
+    for(auto& game: manager.games) 
     {
-        output << "\n" << game << "\n";
+        output << "\n" << *game << "\n";
     }
 
     output << "O Wins: " << manager.o_wins << "\n";
