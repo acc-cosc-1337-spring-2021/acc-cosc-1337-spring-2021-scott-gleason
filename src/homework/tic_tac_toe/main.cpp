@@ -14,6 +14,7 @@ int main()
 	bool continue_game;
 	string game_winner;
 	int board_choice;
+	bool game_ended;
 	int x = 0;
 	int o = 0;
 	int t = 0;
@@ -85,6 +86,7 @@ int main()
 					cout << "\nX Wins: " << x << "\n";
 					cout << "O Wins " << o << "\n";
 					cout << "Ties: " << t << "\n";
+					game_ended = true;
 				}
 				else if (game_winner == "C") 
 				{
@@ -95,14 +97,16 @@ int main()
 					cout << "\nX Wins: " << x << "\n";
 					cout << "O Wins: " << o << "\n";
 					cout << "Ties: " << t << "\n";
+					game_ended = true;
 				}
 			}
 			else 
 			{
 				cout << *tic_tac_toe;
+				game_ended = false;
 			}
 
-		} while (tic_tac_toe -> game_over() == false);
+		} while (game_ended == false);
 		
 		do 
 		{

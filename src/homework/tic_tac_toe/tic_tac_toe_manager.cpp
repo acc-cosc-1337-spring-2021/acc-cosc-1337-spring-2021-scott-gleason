@@ -32,7 +32,7 @@ void TicTacToeManager::save_game(unique_ptr<TicTacToe>& b)
     string winner = b -> get_winner();
 
     update_winner_count(winner);
-    //games.push_back(move(b)); // push back statement is causing my program to quit before prompting the user to play again.
+    games.push_back(std::move(b)); // push back statement is causing my program to quit before prompting the user to play again.
         
 }
 
