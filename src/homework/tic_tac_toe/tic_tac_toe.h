@@ -24,13 +24,14 @@ class TicTacToe
 
     public:
         TicTacToe(int s): pegs(s*s, " "){}
+        TicTacToe(vector<string> p, string w) : pegs(p), winner(w){}
         string get_winner();
-        //TicTacToe() = default;
         string get_player()const;
         void start_game(string first_player);
         void mark_board(int position);
         bool game_over();   
         bool peg_empty(int position);  
+        vector<string> get_pegs()const {return pegs;}
       
         
     private:

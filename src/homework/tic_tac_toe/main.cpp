@@ -19,7 +19,8 @@ int main()
 	int o = 0;
 	int t = 0;
 
-	TicTacToeManager manager; // create instance of TicTacToeManager class.
+	TicTacToeData data;
+	TicTacToeManager manager = TicTacToeManager(data); // create instance of TicTacToeManager class.
 	unique_ptr<TicTacToe> tic_tac_toe; 
 	
 	do 
